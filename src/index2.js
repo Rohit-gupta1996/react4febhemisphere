@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 class App extends Component{
   constructor(props){
     super(props)
-    this.state = {latitude:25 ,longitude:34,errorMessage:''}
+    this.state = {latitude:25 ,longitude:34}
       
   }
   render(){
@@ -17,9 +17,9 @@ class App extends Component{
       this.setState.longitude=position.coords.longitude
     },
       (error) =>
-        console.log({errorMessage:error.message})
+        console.log(error)
       );
-      
+  
 return(
   <div>
   <div>
