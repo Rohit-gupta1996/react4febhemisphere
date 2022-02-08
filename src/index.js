@@ -1,47 +1,36 @@
-
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-
-class App extends Component{
-  constructor(props){
-    super(props)
-    this.state = {latitude:25 ,longitude:34,errorMessage:''}
-      
+import React, {Component} from "react";
+import  ReactDOM  from "react-dom";
+import Hemisphere from "./hemisphere2";
+import './index.css'
+class Locator extends Component
+{
+  state={latitude:34,error:''}
+     componentDidMount(){
+      window.navigator.geolocation.getCurrentPosition(
+        (position)=>
+        {
+          this.setState({latitude:position.coords.latitude})
+        },
+          (error)=>this.setState({error:error.message})
+          );
+     }
+  render(){    
+        if(this.state.error===''){
+          return(
+            <div className ="hemisphre">
+              <Hemisphere latitude={this.state.latitude}></Hemisphere>
+            </div>
+          )
+        }else{
+          return(
+            <div>
+              <label>Error: {this.state.error}</label>
+            </div>
+          )
+        }     
   }
-  render(){
-  window.navigator.geolocation.getCurrentPosition(
-    (position)=>{
-      this.setState({latitude:position.coords.latitude})
-      this.setState.latitude=position.coords.latitude
-      this.setState({longitude:position.coords.longitude})
-      this.setState.longitude=position.coords.longitude
-    },
-      (error) =>
-        console.log({errorMessage:error.message})
-      );
-      
-return(
-  <div>
-  <div>
-    Latitude:
-    {this.state.latitude}
-  </div>
-  <div>
-    Longitude:
-    {this.state.longitude}
-  </div>
-
-  </div>
-  
-    
-   
-)
-} 
 }
-
 ReactDOM.render(
-    <App />,
-  
-  document.getElementById('root')
-);
-
+  <Locator></Locator>,
+  document.querySelector("#root")
+)
